@@ -4,113 +4,221 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Connexion - Système d'Information</title>
-    
-    <link rel="stylesheet" href="../../public/css/bootstrap.min.css">
-    
+
+    <!-- Tailwind CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Font Awesome -->
     <script src="https://kit.fontawesome.com/4645065950.js" crossorigin="anonymous"></script>
+
+    <!-- Page styles -->
     <style>
-        @import url('../../public/css/mookup.css');
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        .right-panel {
+            background: linear-gradient(135deg, #2563eb, #1e40af);
+        }
+
+        .brand-icon {
+            width: 64px;
+            height: 64px;
+            border-radius: 18px;
+            background: rgba(255, 255, 255, 0.18);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            box-shadow: 0 20px 45px rgba(0, 0, 0, 0.15);
+        }
+
+        .check-icon {
+            width: 28px;
+            height: 28px;
+            border-radius: 999px;
+            background: rgba(255, 255, 255, 0.2);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 12px;
+        }
+
+        .help-icon {
+            position: absolute;
+            right: 32px;
+            bottom: 32px;
+            width: 44px;
+            height: 44px;
+            border-radius: 999px;
+            background: rgba(255, 255, 255, 0.18);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+        }
     </style>
 </head>
-<body>
 
-<div class="container-fluid">
-    <div class="row login-section">
-        
-        <div class="col-lg-6 d-flex align-items-center justify-content-center left-panel">
-            <div style="width: 100%; max-width: 450px;">
-                
-                <h2 class="fw-bold mb-2">Connexion</h2>
-                <p class="text-muted mb-4">Bienvenue ! Veuillez vous connecter à votre compte</p>
+<body class="min-h-screen bg-gray-50">
 
-                <?php if (isset($error) && !empty($error)): ?>
-                    <div class="alert alert-danger" role="alert">
-                        <i class="fa-solid fa-triangle-exclamation me-2"></i>
-                        <?= htmlspecialchars($error) ?>
-                    </div>
-                <?php endif; ?>
+<div class="min-h-screen grid grid-cols-1 lg:grid-cols-2">
 
-                <form action="index.php?controller=Auth&action=login" method="POST">
-                    <div class="mb-3">
-                        <label for="username" class="form-label text-secondary fw-bold small">Nom utilisateur</label>
-                        <input type="text" class="form-control" id="username" name="username" placeholder="Entrez votre nom utilisateur" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="password" class="form-label text-secondary fw-bold small">Mot de passe</label>
-                        <div class="input-group">
-                            <input type="password" class="form-control password-input" id="password" name="password" placeholder="Entrez votre mot de passe" required>
-                            <span class="input-group-text border-start-0" onclick="togglePassword()">
-                                <i class="fa-regular fa-eye text-muted" id="toggleIcon"></i>
-                            </span>
-                        </div>
-                    </div>
+    <!-- Left Panel -->
+    <div class="flex items-center justify-center px-6 py-12 bg-white">
+        <div class="w-full max-w-md">
 
-                    <div class="d-flex justify-content-between align-items-center mb-4">
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="rememberMe">
-                            <label class="form-check-label text-secondary small" for="rememberMe">
-                                Se souvenir de moi
-                            </label>
-                        </div>
-                        <a href="#" class="text-primary text-decoration-none small">Mot de passe oublié ?</a>
-                    </div>
+            <h2 class="text-3xl font-bold text-gray-900 mb-2">
+                Connexion
+            </h2>
 
-                    <div class="d-grid mb-4">
-                        <button type="submit" class="btn btn-primary">Se connecter</button>
-                    </div>
+            <p class="text-gray-500 mb-8">
+                Bienvenue ! Veuillez vous connecter à votre compte
+            </p>
 
-                    <div class="text-center">
-                        <span class="text-muted small">Vous n'avez pas de compte ?</span>
-                        <a href="#" class="text-primary text-decoration-none small fw-bold">Créer un compte</a>
-                    </div>
-                </form>
-            </div>
-        </div>
+            <?php if (isset($error) && !empty($error)): ?>
+                <div class="mb-6 flex items-center gap-3 rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-red-700">
+                    <i class="fa-solid fa-triangle-exclamation"></i>
+                    <span><?= htmlspecialchars($error) ?></span>
+                </div>
+            <?php endif; ?>
 
-        <div class="col-lg-6 d-none d-lg-flex flex-column align-items-center justify-content-center right-panel">
-            
-            <div style="max-width: 480px;">
-                <div class="mb-4">
-                    <div class="brand-icon">
-                        <i class="fa-solid fa-chart-simple text-white"></i>
+            <form action="/index.php?controller=Auth&action=login" method="POST" class="space-y-5">
+
+                <!-- Username -->
+                <div>
+                    <label for="username" class="block text-sm font-semibold text-gray-600 mb-2">
+                        Nom utilisateur
+                    </label>
+
+                    <input
+                        type="text"
+                        id="username"
+                        name="username"
+                        placeholder="Entrez votre nom utilisateur"
+                        required
+                        class="w-full rounded-lg border border-gray-300 px-4 py-3 text-gray-900 outline-none transition focus:border-blue-600 focus:ring-2 focus:ring-blue-100"
+                    >
+                </div>
+
+                <!-- Password -->
+                <div>
+                    <label for="password" class="block text-sm font-semibold text-gray-600 mb-2">
+                        Mot de passe
+                    </label>
+
+                    <div class="flex">
+                        <input
+                            type="password"
+                            id="password"
+                            name="password"
+                            placeholder="Entrez votre mot de passe"
+                            required
+                            class="w-full rounded-l-lg border border-gray-300 px-4 py-3 text-gray-900 outline-none transition focus:border-blue-600 focus:ring-2 focus:ring-blue-100"
+                        >
+
+                        <button
+                            type="button"
+                            onclick="togglePassword()"
+                            class="rounded-r-lg border border-l-0 border-gray-300 px-4 text-gray-500 transition hover:bg-gray-50"
+                        >
+                            <i class="fa-regular fa-eye" id="toggleIcon"></i>
+                        </button>
                     </div>
                 </div>
 
-                <h2 class="fw-bold mb-3">Système d'Information</h2>
-                <p class="mb-5 text-light opacity-75 fs-5">
-                    Gérez efficacement votre distribution avec notre plateforme complète
-                </p>
+                <!-- Options -->
+                <div class="flex items-center justify-between">
+                    <label class="flex items-center gap-2 text-sm text-gray-600">
+                        <input
+                            type="checkbox"
+                            id="rememberMe"
+                            class="h-4 w-4 rounded border-gray-300 text-blue-600 focus:ring-blue-600"
+                        >
+                        Se souvenir de moi
+                    </label>
 
-                <ul class="list-unstyled feature-list">
-                    <li>
-                        <span class="check-icon"><i class="fa-solid fa-check"></i></span>
-                        <span>Gestion des clients et commandes</span>
-                    </li>
-                    <li>
-                        <span class="check-icon"><i class="fa-solid fa-check"></i></span>
-                        <span>Suivi des stocks en temps réel</span>
-                    </li>
-                    <li>
-                        <span class="check-icon"><i class="fa-solid fa-check"></i></span>
-                        <span>Tableaux de bord analytiques</span>
-                    </li>
-                </ul>
+                    <a href="#" class="text-sm text-blue-600 hover:underline">
+                        Mot de passe oublié ?
+                    </a>
+                </div>
+
+                <!-- Submit -->
+                <button
+                    type="submit"
+                    class="w-full rounded-lg bg-blue-600 px-4 py-3 font-semibold text-white transition hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-300"
+                >
+                    Se connecter
+                </button>
+
+                <!-- Register -->
+                <div class="text-center text-sm">
+                    <span class="text-gray-500">
+                        Vous n'avez pas de compte ?
+                    </span>
+
+                    <a href="#" class="font-semibold text-blue-600 hover:underline">
+                        Créer un compte
+                    </a>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Right Panel -->
+    <div class="right-panel relative hidden lg:flex flex-col items-center justify-center px-12 text-white">
+        <div class="max-w-md">
+
+            <div class="mb-8">
+                <div class="brand-icon">
+                    <i class="fa-solid fa-chart-simple text-white"></i>
+                </div>
             </div>
 
-            <div class="help-icon">
-                <i class="fa-solid fa-question"></i>
-            </div>
+            <h2 class="text-3xl font-bold mb-4">
+                Système d'Information
+            </h2>
+
+            <p class="mb-10 text-lg text-white/75 leading-relaxed">
+                Gérez efficacement votre distribution avec notre plateforme complète
+            </p>
+
+            <ul class="space-y-5 text-white">
+                <li class="flex items-center">
+                    <span class="check-icon">
+                        <i class="fa-solid fa-check text-sm"></i>
+                    </span>
+                    <span>Gestion des clients et commandes</span>
+                </li>
+
+                <li class="flex items-center">
+                    <span class="check-icon">
+                        <i class="fa-solid fa-check text-sm"></i>
+                    </span>
+                    <span>Suivi des stocks en temps réel</span>
+                </li>
+
+                <li class="flex items-center">
+                    <span class="check-icon">
+                        <i class="fa-solid fa-check text-sm"></i>
+                    </span>
+                    <span>Tableaux de bord analytiques</span>
+                </li>
+            </ul>
         </div>
 
+        <div class="help-icon">
+            <i class="fa-solid fa-question"></i>
+        </div>
     </div>
+
 </div>
 
-<script src="../../public/js/bootstrap.min.js"></script>
 <script>
     function togglePassword() {
         const passwordInput = document.getElementById('password');
         const toggleIcon = document.getElementById('toggleIcon');
-        
+
         if (passwordInput.type === 'password') {
             passwordInput.type = 'text';
             toggleIcon.classList.remove('fa-eye');
@@ -122,5 +230,6 @@
         }
     }
 </script>
+
 </body>
 </html>

@@ -6,11 +6,11 @@ class Connection extends PDO
 
     private function __construct()
     {
-        $host = getenv('MYSQLHOST') ?: '127.0.0.1';
-        $port = getenv('MYSQLPORT') ?: '3306';
-        $dbname = getenv('MYSQLDATABASE') ?: 'RSI';
-        $user = getenv('MYSQLUSER') ?: 'root';
-        $password = getenv('MYSQLPASSWORD') ?: '753159';
+        $host = getenv('DB_HOST') ?: getenv('MYSQLHOST') ?: 'database';
+        $port = getenv('DB_PORT') ?: getenv('MYSQLPORT') ?: '3306';
+        $dbname = getenv('DB_NAME') ?: getenv('MYSQLDATABASE') ?: 'RSI';
+        $user = getenv('DB_USER') ?: getenv('MYSQLUSER') ?: 'rsi_user';
+        $password = getenv('DB_PASSWORD') ?: getenv('MYSQLPASSWORD') ?: 'rsi_password';
 
         $dsn = "mysql:host={$host};port={$port};dbname={$dbname};charset=utf8mb4";
 
@@ -40,7 +40,7 @@ class Connection extends PDO
     {
     }
 
-    public function __wakeup()
+    public function __wakeup(): void
     {
         throw new Exception("Cannot unserialize singleton");
     }
