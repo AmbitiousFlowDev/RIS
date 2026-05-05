@@ -6,8 +6,13 @@ class Connection extends PDO
 
     private function __construct()
     {
-        $dsn = "mysql:host=127.0.0.1;port=3306;dbname=RSI;charset=utf8mb4";
+        $host = getenv('MYSQLHOST') ?: '127.0.0.1';
+        $port = getenv('MYSQLPORT') ?: '3306';
+        $dbname = getenv('MYSQLDATABASE') ?: 'RSI';
+        $user = getenv('MYSQLUSER') ?: 'root';
+        $password = getenv('MYSQLPASSWORD') ?: '753159';
 
+        $dsn = "mysql:host={$host};port={$port};dbname={$dbname};charset=utf8mb4";
 
         $options = [
             PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
@@ -16,22 +21,25 @@ class Connection extends PDO
         ];
 
         try {
-            parent::__construct($dsn, "root", "753159", $options);
+            parent::__construct($dsn, $user, $password, $options);
         } catch (PDOException $e) {
             die("Database Connection Error: " . $e->getMessage());
         }
     }
+
     public static function getInstance(): Connection
     {
         if (self::$instance === null) {
             self::$instance = new self();
         }
+
         return self::$instance;
     }
 
     private function __clone()
     {
     }
+
     public function __wakeup()
     {
         throw new Exception("Cannot unserialize singleton");
