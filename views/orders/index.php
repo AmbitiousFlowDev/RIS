@@ -12,8 +12,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Orders - Dashboard</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="assets/css/security-ui.css">
 
     <style>
         body {
@@ -112,17 +111,17 @@
                         <tbody class="divide-y divide-gray-100">
                             <?php foreach ($orders as $order): ?>
                                 <tr class="table-row-hover transition-colors">
-                                    <td class="px-6 py-4 font-medium text-slate-900"><?= $order['order_id'] ?></td>
-                                    <td class="px-6 py-4 text-slate-600"><?= date('M d, Y', strtotime($order['order_date'])) ?></td>
+                                    <td class="px-6 py-4 font-medium text-slate-900"><?= (int)$order['order_id'] ?></td>
+                                    <td class="px-6 py-4 text-slate-600"><?= e(date('M d, Y', strtotime($order['order_date']))) ?></td>
                                     <td class="px-6 py-4 text-slate-600"><?= htmlspecialchars($order['client_name'] ?? 'N/A') ?></td>
                                     <td class="px-6 py-4 text-slate-500"><?= htmlspecialchars($order['employee_name'] ?? 'N/A') ?></td>
                                     <td class="px-6 py-4 text-right">
                                         <div class="flex items-center justify-end gap-2">
-                                            <button onclick='openEditModal(<?= json_encode($order) ?>)'
+                                            <button onclick='openEditModal(<?= htmlspecialchars(json_encode($order, JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP), ENT_QUOTES, 'UTF-8') ?>)'
                                                 class="bg-orange-600 hover:bg-orange-700 text-white px-3 py-1.5 rounded text-xs flex items-center gap-1 transition-colors">
                                                 <i class="fa-solid fa-pen"></i> Edit
                                             </button>
-                                            <button onclick="openDeleteModal(<?= $order['order_id'] ?>, 'Order #<?= $order['order_id'] ?>')"
+                                            <button onclick="openDeleteModal(<?= (int)$order['order_id'] ?>, 'Order #<?= (int)$order['order_id'] ?>')"
                                                 class="bg-red-600 hover:bg-red-700 text-white p-1.5 px-2 rounded text-xs transition-colors">
                                                 <i class="fa-solid fa-trash"></i> Delete
                                             </button>
@@ -159,7 +158,7 @@
                             class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-orange-500">
                             <option value="">Select a client</option>
                             <?php foreach ($clients as $client): ?>
-                                <option value="<?= $client['client_id'] ?>">
+                                <option value="<?= (int)$client['client_id'] ?>">
                                     <?= htmlspecialchars($client['first_name'] . ' ' . $client['last_name']) ?>
                                 </option>
                             <?php endforeach; ?>
@@ -171,7 +170,7 @@
                             class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-orange-500">
                             <option value="">Select an employee</option>
                             <?php foreach ($employees as $employee): ?>
-                                <option value="<?= $employee['employee_id'] ?>">
+                                <option value="<?= (int)$employee['employee_id'] ?>">
                                     <?= htmlspecialchars($employee['first_name'] . ' ' . $employee['last_name']) ?>
                                 </option>
                             <?php endforeach; ?>
@@ -215,7 +214,7 @@
                             class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-orange-500">
                             <option value="">Select a client</option>
                             <?php foreach ($clients as $client): ?>
-                                <option value="<?= $client['client_id'] ?>">
+                                <option value="<?= (int)$client['client_id'] ?>">
                                     <?= htmlspecialchars($client['first_name'] . ' ' . $client['last_name']) ?>
                                 </option>
                             <?php endforeach; ?>
@@ -227,7 +226,7 @@
                             class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-orange-500">
                             <option value="">Select an employee</option>
                             <?php foreach ($employees as $employee): ?>
-                                <option value="<?= $employee['employee_id'] ?>">
+                                <option value="<?= (int)$employee['employee_id'] ?>">
                                     <?= htmlspecialchars($employee['first_name'] . ' ' . $employee['last_name']) ?>
                                 </option>
                             <?php endforeach; ?>

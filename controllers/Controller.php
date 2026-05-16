@@ -16,8 +16,16 @@ abstract class Controller
     }
     protected function render(string $view, array $data = [])
     {
-        extract($data);
-        require_once "views/$view.php";
+        extract($data, EXTR_SKIP);
+        ob_start();
+        require "views/$view.php";
+        $html = ob_get_clean();
+
+        if (class_exists('Security')) {
+            $html = Security::prepareHtmlResponse($html);
+        }
+
+        echo $html;
     }
     protected function redirect(string $route)
     {

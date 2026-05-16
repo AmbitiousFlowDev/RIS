@@ -29,7 +29,7 @@ class UserController extends Controller
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $userData = [
                 'username' => $data['username'] ?? '',
-                'password_hash' => md5($data['password'] ?? ''),
+                'password_hash' => password_hash((string)($data['password'] ?? ''), PASSWORD_DEFAULT),
                 'user_category' => $data['user_category'] ?? 'EMPLOYEE',
                 'employee_id' => (int)($data['employee_id'] ?? 0)
             ];
@@ -54,7 +54,7 @@ class UserController extends Controller
 
             // If password is provided, update it
             if (!empty($data['password'])) {
-                $userData['password_hash'] = md5($data['password']);
+                $userData['password_hash'] = password_hash((string)$data['password'], PASSWORD_DEFAULT);
             }
 
             $this->userModel->update($userId, $userData);

@@ -10,8 +10,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Clients - Dashboard</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="assets/css/security-ui.css">
 
     <style>
         body {
@@ -111,18 +110,18 @@
                         <tbody class="divide-y divide-gray-100">
                             <?php foreach ($clients as $client): ?>
                                 <tr class="table-row-hover transition-colors">
-                                    <td class="px-6 py-4 font-medium text-slate-900"><?= $client['client_id'] ?></td>
+                                    <td class="px-6 py-4 font-medium text-slate-900"><?= (int)$client['client_id'] ?></td>
                                     <td class="px-6 py-4 text-slate-600"><?= htmlspecialchars($client['first_name']) ?></td>
                                     <td class="px-6 py-4 text-slate-600"><?= htmlspecialchars($client['last_name']) ?></td>
                                     <td class="px-6 py-4 text-slate-500"><?= htmlspecialchars($client['address'] ?? 'N/A') ?></td>
                                     <td class="px-6 py-4 text-slate-500"><?= htmlspecialchars($client['city'] ?? 'N/A') ?></td>
                                     <td class="px-6 py-4 text-right">
                                         <div class="flex items-center justify-end gap-2">
-                                            <button onclick='openEditModal(<?= json_encode($client) ?>)'
+                                            <button onclick='openEditModal(<?= htmlspecialchars(json_encode($client, JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP), ENT_QUOTES, 'UTF-8') ?>)'
                                                 class="bg-blue-600 hover:bg-blue-700 text-white px-3 py-1.5 rounded text-xs flex items-center gap-1 transition-colors">
                                                 <i class="fa-solid fa-pen"></i> Edit
                                             </button>
-                                            <button onclick="openDeleteModal(<?= $client['client_id'] ?>, '<?= htmlspecialchars($client['first_name'] . ' ' . $client['last_name'], ENT_QUOTES) ?>')"
+                                            <button onclick="openDeleteModal(<?= (int)$client['client_id'] ?>, '<?= htmlspecialchars($client['first_name'] . ' ' . $client['last_name'], ENT_QUOTES) ?>')"
                                                 class="bg-red-600 hover:bg-red-700 text-white p-1.5 px-2 rounded text-xs transition-colors">
                                                 <i class="fa-solid fa-trash"></i> Delete
                                             </button>

@@ -11,8 +11,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Employees - Dashboard</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="assets/css/security-ui.css">
 
     <style>
         body {
@@ -121,7 +120,7 @@
                                 };
                                 ?>
                                 <tr class="table-row-hover transition-colors">
-                                    <td class="px-6 py-4 font-medium text-slate-900"><?= $employee['employee_id'] ?></td>
+                                    <td class="px-6 py-4 font-medium text-slate-900"><?= (int)$employee['employee_id'] ?></td>
                                     <td class="px-6 py-4 text-slate-600"><?= htmlspecialchars($employee['first_name']) ?></td>
                                     <td class="px-6 py-4 text-slate-600"><?= htmlspecialchars($employee['last_name']) ?></td>
                                     <td class="px-6 py-4">
@@ -131,11 +130,11 @@
                                     </td>
                                     <td class="px-6 py-4 text-right">
                                         <div class="flex items-center justify-end gap-2">
-                                            <button onclick='openEditModal(<?= json_encode($employee) ?>)'
+                                            <button onclick='openEditModal(<?= htmlspecialchars(json_encode($employee, JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP), ENT_QUOTES, 'UTF-8') ?>)'
                                                 class="bg-indigo-600 hover:bg-indigo-700 text-white px-3 py-1.5 rounded text-xs flex items-center gap-1 transition-colors">
                                                 <i class="fa-solid fa-pen"></i> Edit
                                             </button>
-                                            <button onclick="openDeleteModal(<?= $employee['employee_id'] ?>, '<?= htmlspecialchars($employee['first_name'] . ' ' . $employee['last_name'], ENT_QUOTES) ?>')"
+                                            <button onclick="openDeleteModal(<?= (int)$employee['employee_id'] ?>, '<?= htmlspecialchars($employee['first_name'] . ' ' . $employee['last_name'], ENT_QUOTES) ?>')"
                                                 class="bg-red-600 hover:bg-red-700 text-white p-1.5 px-2 rounded text-xs transition-colors">
                                                 <i class="fa-solid fa-trash"></i> Delete
                                             </button>

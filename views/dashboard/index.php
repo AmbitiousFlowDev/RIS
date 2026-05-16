@@ -12,8 +12,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard - Retail System Information</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="assets/css/security-ui.css">
 
     <style>
         body {
@@ -144,11 +143,11 @@
                                     };
                                     ?>
                                     <tr class="table-row-hover transition-colors">
-                                        <td class="px-6 py-4 font-medium text-slate-900">#ORD-<?= $order['id'] ?></td>
+                                        <td class="px-6 py-4 font-medium text-slate-900">#ORD-<?= (int)$order['id'] ?></td>
                                         <td class="px-6 py-4 text-slate-600"><?= htmlspecialchars($order['client']) ?></td>
                                         <td class="px-6 py-4">
                                             <span class="px-3 py-1 rounded-full text-xs font-semibold <?= $badgeClass ?>">
-                                                <?= $order['status'] ?? 'Completed' ?>
+                                                <?= e($order['status'] ?? 'Completed') ?>
                                             </span>
                                         </td>
                                         <td class="px-6 py-4 text-right font-medium">$<?= number_format($order['total'], 2) ?></td>
@@ -176,11 +175,11 @@
                             <tbody class="divide-y divide-gray-100">
                                 <?php foreach ($auditLogs as $log): ?>
                                     <tr class="table-row-hover transition-colors">
-                                        <td class="px-6 py-4 font-medium text-slate-900"><?= $log['action'] ?></td>
+                                        <td class="px-6 py-4 font-medium text-slate-900"><?= e($log['action']) ?></td>
                                         <td class="px-6 py-4">
-                                            <span class="bg-slate-100 px-2 py-0.5 rounded text-xs"><?= $log['user'] ?></span>
+                                            <span class="bg-slate-100 px-2 py-0.5 rounded text-xs"><?= e($log['user']) ?></span>
                                         </td>
-                                        <td class="px-6 py-4 text-right text-xs text-slate-400"><?= $log['created_at'] ?? '' ?></td>
+                                        <td class="px-6 py-4 text-right text-xs text-slate-400"><?= e($log['created_at'] ?? '') ?></td>
                                     </tr>
                                 <?php endforeach; ?>
                             </tbody>

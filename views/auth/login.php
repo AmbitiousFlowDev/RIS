@@ -4,12 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Connexion - Système d'Information</title>
+    <link rel="stylesheet" href="assets/css/security-ui.css">
 
     <!-- Tailwind CDN -->
-    <script src="https://cdn.tailwindcss.com"></script>
 
     <!-- Font Awesome -->
-    <script src="https://kit.fontawesome.com/4645065950.js" crossorigin="anonymous"></script>
 
     <!-- Page styles -->
     <style>

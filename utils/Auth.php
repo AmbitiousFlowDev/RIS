@@ -10,6 +10,7 @@ class Auth
 
         if ($user) {
             self::startSession();
+            session_regenerate_id(true);
             $_SESSION['user'] = $user;
             return true;
         }
@@ -34,6 +35,9 @@ class Auth
     private static function startSession()
     {
         if (session_status() === PHP_SESSION_NONE) {
+            if (class_exists('Security')) {
+                Security::configureSession();
+            }
             session_start();
         }
     }

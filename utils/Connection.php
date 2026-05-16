@@ -23,7 +23,9 @@ class Connection extends PDO
         try {
             parent::__construct($dsn, $user, $password, $options);
         } catch (PDOException $e) {
-            die("Database Connection Error: " . $e->getMessage());
+            error_log('Database Connection Error: ' . $e->getMessage());
+            http_response_code(500);
+            exit('Database connection error.');
         }
     }
 

@@ -11,8 +11,13 @@ class AuthController extends Controller
         $this->attach(new SyncLogObserver());
     }
 
-    public function login(array $data)
+    public function login(array $data = [])
     {
+        if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+            $this->render('auth/login');
+            return;
+        }
+
         $username = $data['username'] ?? '';
         $password = $data['password'] ?? '';
         if ($this->authenticate($username, $password)) {
@@ -35,6 +40,10 @@ class AuthController extends Controller
 
     public function logout()
     {
+        if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+            $this->redirect('controller=Dashboard&action=index');
+        }
+
         $user = $this->currentUser();
         
         $this->notify('user.logout', $user);

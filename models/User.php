@@ -47,17 +47,42 @@ final class User extends Model
     public function findByCredentials(string $username, string $password): ?UserInterface
     {
         $sql = "
-            SELECT u.user_id, u.username, u.user_category, u.employee_id, r.role_code
+            SELECT u.user_id, u.username, u.password_hash, u.user_category, u.employee_id, r.role_code
             FROM {$this->table} u
             INNER JOIN Employee e ON e.employee_id = u.employee_id AND e.deleted_at IS NULL
             INNER JOIN Role r ON r.role_id = e.role_id AND r.deleted_at IS NULL
-            WHERE u.username = ? AND u.password_hash = ? AND u.deleted_at IS NULL
+            WHERE u.username = ? AND u.deleted_at IS NULL
             LIMIT 1
         ";
         $stmt = $this->db->prepare($sql);
-        $stmt->execute([$username, md5($password)]);
+        $stmt->execute([$username]);
         $data = $stmt->fetch();
 
-        return $data ? UserFactory::create($data) : null;
+        if (!$data || !$this->verifyPassword($password, (string) $data['password_hash'])) {
+            return null;
+        }
+
+        if (password_needs_rehash((string) $data['password_hash'], PASSWORD_DEFAULT)) {
+            $this->updatePasswordHash((int) $data['user_id'], password_hash($password, PASSWORD_DEFAULT));
+        }
+
+        unset($data['password_hash']);
+        return UserFactory::create($data);
+    }
+
+    private function verifyPassword(string $password, string $storedHash): bool
+    {
+        if (password_verify($password, $storedHash)) {
+            return true;
+        }
+
+        // Backward compatibility with existing seed data using MD5.
+        return hash_equals($storedHash, md5($password));
+    }
+
+    private function updatePasswordHash(int $userId, string $hash): void
+    {
+        $stmt = $this->db->prepare("UPDATE {$this->table} SET password_hash = :hash WHERE {$this->primaryKey} = :id");
+        $stmt->execute(['hash' => $hash, 'id' => $userId]);
     }
 }

@@ -63,12 +63,13 @@ $can = $sidebarUser instanceof UserInterface ? fn(string $r) => $sidebarUser->ca
         </nav>
     </div>
 
-    <!-- Bottom Actions -->
     <div class="p-4 border-t border-gray-100">
-        <a href="index.php?controller=Auth&action=logout"
-            class="flex items-center px-4 py-2 text-red-600 hover:bg-red-50 rounded-md transition-colors">
-            <i class="fa-solid fa-arrow-right-from-bracket w-5"></i>
-            <span class="font-medium text-sm ml-2">Logout</span>
-        </a>
+        <form action="index.php?controller=Auth&action=logout" method="POST">
+            <button type="submit"
+                class="w-full flex items-center px-4 py-2 text-red-600 hover:bg-red-50 rounded-md transition-colors bg-white border-0">
+                <i class="fa-solid fa-arrow-right-from-bracket w-5"></i>
+                <span class="font-medium text-sm ml-2">Logout</span>
+            </button>
+        </form>
     </div>
 </aside>

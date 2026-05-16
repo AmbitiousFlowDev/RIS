@@ -39,6 +39,7 @@ trait AuthTrait
         $user = $userModel->findByCredentials($username, $password);
 
         if ($user) {
+            session_regenerate_id(true);
             $_SESSION['user'] = $user;
             return true;
         }

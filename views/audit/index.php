@@ -10,8 +10,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Audit Logs - Dashboard</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="assets/css/security-ui.css">
 
     <style>
         body {
@@ -134,21 +133,21 @@
                                             default => 'fa-circle-info'
                                         };
                                         ?>
-                                        <tr class="table-row-hover transition-colors" data-action-category="<?= $category ?>">
-                                            <td class="px-6 py-4 font-medium text-slate-900"><?= $audit['audit_id'] ?></td>
+                                        <tr class="table-row-hover transition-colors" data-action-category="<?= e($category) ?>">
+                                            <td class="px-6 py-4 font-medium text-slate-900"><?= (int)$audit['audit_id'] ?></td>
                                             <td class="px-6 py-4 text-slate-600">
-                                                <?= date('M d, Y H:i:s', strtotime($audit['action_date'])) ?>
+                                                <?= e(date('M d, Y H:i:s', strtotime($audit['action_date']))) ?>
                                             </td>
                                             <td class="px-6 py-4">
                                                 <span class="action-badge <?= $badgeClass ?>">
-                                                    <i class="fa-solid <?= $icon ?> mr-1"></i>
+                                                    <i class="fa-solid <?= e($icon) ?> mr-1"></i>
                                                     <?= htmlspecialchars($actionType) ?>
                                                 </span>
                                             </td>
                                             <td class="px-6 py-4 text-slate-600">
                                                 <div class="flex items-center gap-2">
                                                     <div class="h-8 w-8 rounded-full bg-slate-200 flex items-center justify-center text-slate-600 text-xs">
-                                                        <?= strtoupper(substr($audit['username'] ?? 'U', 0, 1)) ?>
+                                                        <?= e(strtoupper(substr($audit['username'] ?? 'U', 0, 1))) ?>
                                                     </div>
                                                     <span><?= htmlspecialchars($audit['username'] ?? 'Unknown') ?></span>
                                                 </div>
